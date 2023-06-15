@@ -126,41 +126,93 @@ ol {
     display: block;
 }
 
-
-
-
-
-@media(max-width:900px) {
-.lista{
-     position: fixed;
-        width: 80%;
-        height: 90vh;
-        background: #565656;
-        top: 155px;
-        left: -100%;
-        text-align: center;
-        transition: all .5s;
+.panel-btn2 {
+    display: none;
 }
 
 
 
-    .lista li {
-        display: block;
-        margin: 50px 0;
-        line-height: 30px;
-    }
+@media(max-width:900px) {
 
-    .lista li a {
-        font-size: 40px;
-        color: #ececec;
-    }
+    
+.panel2 {
+    position: fixed;
+    z-index: 997;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    background-color: yellow;
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.3s ease, opacity 0.5s ease;
+    /* De arriba */
+    transform: translate(0, -100%);
+    /* De abajo */
+    transform: translate(0, 100%);
+    /* De la derecha */
+    transform: translate(100%, 0);
+    /* De la izquierda */
+    transform: translate(-100%, 0);
+}
 
-    .lista li a:hover,
-    li a.active {
-        background: none;
-        color: red;
-    }
+.panel2.is-active {
+    transform: translate(0, 0);
+    opacity: 1;
+    visibility: visible;
+}
 
+
+.menu2 {
+    /* width: inherit; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+}
+
+.menu2 a {
+    padding: 2rem;
+    width: inherit;
+    display: block;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: black;
+    transition: all 0.3s ease;
+}
+
+.menu2 a:hover {
+    font-weight: bold;
+    color: black;
+    background-color: white;
+}
+
+.subMenu a{
+    font-size: 1rem;
+    background-color: blueviolet;
+}
+
+.panel-btn2 {
+    position: fixed;
+    z-index: 997;
+    bottom: 1vh;
+    right: 10vw;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+}
 
 }
 
@@ -180,6 +232,16 @@ ol {
         </span>
     </button>
 
+
+
+        <!-- Segundo Botón del menú Hamburguesa  -->
+        <button class="panel-btn2 hamburger hamburger--emphatic" type="button">
+            <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+            </span>
+        </button>
+
+
 <aside class="panel">
     <nav class="menu" dark-mode>
         <a href="#seccion_1" >Sección 1</a>
@@ -192,7 +254,11 @@ ol {
 </aside>
 
 
-<ul class="lista">
+
+<aside class="panel2">
+    <nav class="menu2">
+
+        <ul class="lista">
     <li>
         <div>
             <a href="#seccion1" class="conocenos">Seccion 1</a>
@@ -214,9 +280,12 @@ ol {
 </ul>
 
 
+</nav>
+</aside>
+
 
 <script>
-    function menuHamburguesa(panelBtn, panel, menuLink) {
+    function menuHamburguesa1(panelBtn, panel, menuLink) {
         const d = document;
 
         d.addEventListener("click", (e) => {
@@ -231,9 +300,33 @@ ol {
             }
 
         });
-    }
+    };
 
-    document.addEventListener("DOMContentLoaded", menuHamburguesa(".panel-btn", ".panel", ".menu a"))
+    function menuHamburguesa2(panelBtn, panel, menuLink) {
+       
+        const d = document;
+
+        d.addEventListener("click", (e) => {
+            if (e.target.matches(panelBtn) || e.target.matches(`${panelBtn} *`)) {
+                d.querySelector(panel).classList.toggle("is-active");
+                d.querySelector(panelBtn).classList.toggle("is-active");
+            }
+
+            if (e.target.matches(menuLink)) {
+                d.querySelector(panel).classList.remove("is-active");
+                d.querySelector(panelBtn).classList.remove("is-active");
+            }
+
+        });
+    };
+
+    document.addEventListener("DOMContentLoaded", e=>{
+         menuHamburguesa1(".panel-btn", ".panel", ".menu a");
+
+         menuHamburguesa2(".panel-btn2", ".panel2", ".menu2 a")
+         
+    });
+
 </script>
 
 </body>
